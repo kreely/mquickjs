@@ -4,7 +4,7 @@ MicroQuickJS
 ## Introduction
 
 MicroQuickJS (aka. MQuickJS) is a Javascript engine targetted at
-embedded systems. It compiles and runs Javascript programs with as little
+embedded systems. It compiles and runs Javascript programs using as little
 as 10 kB of RAM. The whole engine requires about 100 kB of ROM (ARM
 Thumb-2 code) including the C library. The speed is comparable to
 QuickJS.
@@ -56,9 +56,9 @@ Then you can run the compiled bytecode as a normal script:
 ```
 
 The bytecode format depends on the endianness and word length (32 or
-64 bit) of the CPU. On a 64 bit CPU, it is possible to generate 32 bit
-bytecode to run it on an embedded 32 bit system with the `-m32`
-option.
+64 bit) of the CPU. On a 64 bit CPU, it is possible to use the option
+`-m32` to generate 32 bit bytecode that can run on an embedded 32 
+bit system.
 
 Use the option `--no-column` to remove the column number debug info
 (only line numbers are remaining) if you want to save some storage.
