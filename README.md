@@ -109,7 +109,7 @@ engines. Here are the main points:
 
 - `Array` objects:
 
-    - They have no hole.
+    - They have no holes.
     
     - Numeric properties are always handled by the array object and not
       forwarded to its prototype.
@@ -142,10 +142,10 @@ Always prefer using `for of` instead which is supported with arrays:
 
 - `prototype`, `length` and `name` are getter/setter in function objects.
 
-- C functions cannot have own properties (but C constructors behave as
+- C functions cannot have their own properties (but C constructors behave as
   expected).
 
-- The global object is supported but its use is discouraged. It cannot
+- The global object is supported, but its use is discouraged. It cannot
   contain getter/setters and properties directly created in it are not
   visible as global variables in the executing script.
 
@@ -186,7 +186,7 @@ ES5 extensions:
 
 - String functions: `codePointAt`, `replaceAll`, `trimStart`, `trimEnd`.
 
-- globalThis.
+- global `This`.
 
 ## C API
 
@@ -212,7 +212,7 @@ The C API is very similar to QuickJS (see `mquickjs.h`). However,
 since there is a compacting garbage collector, there are important
 differences:
 
-1. Explicitely freeing values is not necessary (no `JS_FreeValue()`).
+1. Explicitly freeing values is not necessary (no `JS_FreeValue()`).
 
 2. The address of objects can move each time a JS allocation is
 called. The general rule is to avoid having variables of type
@@ -247,7 +247,7 @@ JSValue my_js_func(JSContext *ctx, JSValue *this_val, int argc, JSValue *argv)
 }
 ```
 
-When running on PC, the `DEBUG_GC` can be used to force the JS
+When running on a PC, the `DEBUG_GC` define can be used to force the JS
 allocator to always move objects at each allocation. It is a good way
 to check no invalid JSValue is used.
 
@@ -306,7 +306,7 @@ CPU). A value may contain:
   - a pointer to a memory block. Memory blocks have a tag stored in
     memory.
 
-Javascript objects requires at least 3 CPU words (hence 12 bytes on a
+Javascript objects require at least 3 CPU words (hence 12 bytes on a
 32 bit CPU). Additional data may be allocated depending on the object
 class. The properties are stored in a hash table. Each property
 requires at least 3 CPU words. Properties may reside in ROM for
@@ -317,11 +317,11 @@ type. They are either a string or a positive 31 bit integer. String
 property keys are internalized (unique).
 
 Strings are internally stored in UTF-8 (instead of 8 or 16 bit arrays
-in QuickJS). Surrogate pairs are not stored explicitly but still
+in QuickJS). Surrogate pairs are not stored explicitly but are still
 visible when iterating thru 16 bit code units in Javascript. Hence full
 compatibility with Javascript and UTF-8 is maintained.
 
-C Function can be stored as a single value to reduce the overhead. In
+Any C Function can be stored as a single value to reduce the overhead. In
 this case, no additional properties can be added. Most standard
 library functions are stored this way.
 
@@ -338,7 +338,7 @@ bytecode references atoms thru an indirect table so that it is
 read-only.
 
 Line and column number information is compressed with variable length
-Golomb codes.
+[Golomb codes](https://en.wikipedia.org/wiki/Golomb_coding).
 
 ### Compilation
 
